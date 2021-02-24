@@ -19,7 +19,8 @@ public class Sqlite {
     Connection c = null;
     Statement sentencia = null; /*A Statement is a interfaz that represent a SQL
     instruction*/
-    String nombreTabla;
+    String nombreTabla,nombre,apellido,nota;
+    int id;
     /* Conected method*/
     public void conectar(){
     try{
@@ -44,13 +45,34 @@ public class Sqlite {
                 "(ID INT PRIMARY KEY NOT NULL, "+
                 " Nombre TEXT NOT NULL, "+
                 " Apellido TEXT NOT NULL, "+
-                " Nota INT NOT NULL)";
+                " Nota TEXT NOT NULL)";
         sentencia.execute(sqlComand);
         sentencia.close();
         c.close();
         System.out.println("Tabla creada");
         }catch(Exception e){
             System.out.println("ERROR");
+        }
+    }
+    /*Create insertDatos method*/
+    public void insertarDatos(int id, String nombre, String apellido, String nota){
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.nota = nota;
+        
+        /*Insert into table*/
+        String sqlComand = "INSERT INTO "+nombreTabla+"(id, nombre, apellido, nota)"+
+                "VALUES("+id+",'"+nombre+"','"+apellido+"','"+nota+"');";
+        try{
+            conectar();
+            sentencia = c.createStatement();
+            sentencia.executeUpdate(sqlComand);
+            sentencia.close();
+            c.close();
+            System.out.println("Datos insertados");
+        }catch (Exception e){
+            System.out.println("Error al insertar datos en la tabla");
         }
     }
 }

@@ -5,14 +5,11 @@ import java.sql.SQLException;
 
 
 public class Main {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws SQLException {
         Sqlite myDb = new Sqlite();
         myDb.conectar();
-        try {
-            myDb.crearTabla("prueba");
-        } catch (SQLException e) {
-            System.out.println("Error");;
-        }
+        myDb.crearTabla("prueba");
+        myDb.insertarDatos(0, "Nicolas", "Berto", "10");
     }
     
 }
