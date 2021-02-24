@@ -33,17 +33,24 @@ public class Sqlite {
     /* Create table method */
     public void crearTabla (String nombreTabla) throws SQLException{
         this.nombreTabla = nombreTabla;
+         try{
+            sentencia = c.createStatement();
         /* Delete table if it's was create */
-        String sqlComand = "DROP TABLE IF EXISTS ;"+nombreTabla+"";
+        String sqlComand = "DROP TABLE IF EXISTS "+nombreTabla+"";
         sentencia.execute(sqlComand);
+        sentencia.close();
         /* Create a table*/
         sqlComand =  "CREATE TABLE "+nombreTabla+" "+
-                "(ID INT PRIMARY KWY NOT NULL)";
+                "(ID INT PRIMARY KEY NOT NULL, "+
+                " Nombre TEXT NOT NULL, "+
+                " Apellido TEXT NOT NULL, "+
+                " Nota INT NOT NULL)";
         sentencia.execute(sqlComand);
-        try{
-            
+        sentencia.close();
+        c.close();
+        System.out.println("Tabla creada");
         }catch(Exception e){
-            
+            System.out.println("ERROR");
         }
     }
 }
